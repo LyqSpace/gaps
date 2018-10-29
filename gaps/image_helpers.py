@@ -35,6 +35,24 @@ def flatten_image(image, piece_size, indexed=False):
     return pieces, rows, columns
 
 
+def flatten_image_stripe(image, piece_size, indexed=False):
+    rows, columns = 1, image.shape[1] // piece_size
+    pieces = []
+
+    # Crop pieces from original image
+    for y in range(rows):
+        for x in range(columns):
+            left, top, w, h = x * piece_size, 0, (x + 1) * piece_size, image.shape[0]
+            piece = np.empty((image.shape[0], piece_size, image.shape[2]))
+            piece[:, :, :] = image[top:h, left:w, :]
+            pieces.append(piece)
+
+    if indexed:
+        pieces = [Piece(value, index) for index, value in enumerate(pieces)]
+
+    return pieces, rows, columns
+
+
 def assemble_image(pieces, rows, columns):
     """Assembles image from pieces.
 

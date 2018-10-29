@@ -18,7 +18,7 @@ import cv2
 from gaps import image_helpers
 
 MIN_PIECE_SIZE = 28
-MAX_PIECE_SIZE = 64
+MAX_PIECE_SIZE = 128
 DEFAULT_PIECE_SIZE = 28
 
 COLOR_STRING = {
@@ -30,7 +30,7 @@ COLOR_STRING = {
 def create_puzzle(image_path, output_path, piece_size):
     """Creates jigsaw puzzle from input image"""
     image = cv2.imread(image_path)
-    pieces, rows, columns = image_helpers.flatten_image(image, piece_size)
+    pieces, rows, columns = image_helpers.flatten_image_stripe(image, piece_size)
 
     # Randomize pieces in order to make puzzle
     np.random.shuffle(pieces)
