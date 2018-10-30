@@ -17,8 +17,8 @@ import cv2
 
 from gaps import image_helpers
 
-MIN_PIECE_SIZE = 28
-MAX_PIECE_SIZE = 128
+MIN_PIECE_SIZE = 0
+MAX_PIECE_SIZE = 200
 DEFAULT_PIECE_SIZE = 28
 
 COLOR_STRING = {

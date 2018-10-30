@@ -11,7 +11,7 @@ import argparse
 import matplotlib.pyplot as plt
 import cv2
 from time import time
-from gaps.genetic_algorithm import GeneticAlgorithm
+from gaps.genetic_algorithm_stripe import GeneticAlgorithm
 from gaps.size_detector import SizeDetector
 from gaps.plot import Plot
 
