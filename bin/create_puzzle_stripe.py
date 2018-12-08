@@ -19,7 +19,7 @@ from gaps import image_helpers
 
 MIN_PIECE_SIZE = 0
 MAX_PIECE_SIZE = 200
-DEFAULT_PIECE_SIZE = 28
+DEFAULT_PIECE_SIZE = 21
 
 COLOR_STRING = {
     "ERROR": "\033[31m[ERROR]\033[0m {0}",
