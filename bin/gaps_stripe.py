@@ -15,8 +15,8 @@ from gaps.genetic_algorithm_stripe import GeneticAlgorithm
 from gaps.size_detector import SizeDetector
 from gaps.plot import Plot
 
-GENERATIONS = 20
-POPULATION = 200
+GENERATIONS = 30
+POPULATION = 1000
 
 
 def show_image(img, title):
@@ -34,6 +34,7 @@ def parse_arguments():
     parser.add_argument("--size", type=int, help="Single piece size in pixels.")
     parser.add_argument("--verbose", action="store_true", help="Show best individual after each generation.")
     parser.add_argument("--save", action="store_true", help="Save puzzle result as image.")
+    parser.add_argument("-n", type=int, default=0)
     return parser.parse_args()
 
 if __name__ == "__main__":
@@ -42,11 +43,15 @@ if __name__ == "__main__":
     image = cv2.imread(args.image)
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
-    if args.size is not None:
-        piece_size = args.size
+    if args.n > 0:
+        width = image.shape[1]
+        piece_size = int(width / args.n)
     else:
-        detector = SizeDetector(image)
-        piece_size = detector.detect_piece_size()
+        if args.size is not None:
+            piece_size = args.size
+        else:
+            detector = SizeDetector(image)
+            piece_size = detector.detect_piece_size()
 
     print("\n=== Population:  {}".format(args.population))
     print("=== Generations: {}".format(args.generations))
@@ -61,11 +66,11 @@ if __name__ == "__main__":
     print("\n=== Done in {0:.3f} s".format(end - start))
 
     solution_image = solution.to_image()
-    solution_image_name = args.image.split(".")[0] + "_solution.jpg"
+    solution_image_name = "results/" + args.image.split("/")[1].split(".")[0] + "_" + str(args.n) + "_GA_sol.png"
 
     if args.save:
         cv2.imwrite(solution_image_name, solution_image)
         print("=== Result saved as '{}'".format(solution_image_name))
 
     print("=== Close figure to exit")
-    show_image(solution_image, "Solution")
+    # show_image(solution_image, "Solution")

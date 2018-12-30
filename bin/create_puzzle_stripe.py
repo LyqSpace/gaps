@@ -27,9 +27,14 @@ COLOR_STRING = {
 }
 
 
-def create_puzzle(image_path, output_path, piece_size):
+def create_puzzle(image_path, output_path, piece_size, pieces_n):
     """Creates jigsaw puzzle from input image"""
     image = cv2.imread(image_path)
+
+    if pieces_n > 0:
+        width = image.shape[1]
+        piece_size = int(width / pieces_n)
+
     pieces, rows, columns = image_helpers.flatten_image_stripe(image, piece_size)
 
     # Randomize pieces in order to make puzzle
@@ -85,10 +90,11 @@ def parse_arguments():
     parser.add_argument("--destination", type=str, default="./out.jpg",
                         help="Path to the output file.")
     parser.add_argument("--size", type=int, default=DEFAULT_PIECE_SIZE, help=piece_size_help)
+    parser.add_argument("-n", type=int, default=0, help=piece_size_help)
 
     return parser.parse_args()
 
 if __name__ == "__main__":
     ARGS = parse_arguments()
     validate_arguments(ARGS)
-    create_puzzle(ARGS.source, ARGS.destination, ARGS.size)
+    create_puzzle(ARGS.source, ARGS.destination, ARGS.size, ARGS.n)

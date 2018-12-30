@@ -38,7 +38,7 @@ def flatten_image(image, piece_size, indexed=False):
 def flatten_image_stripe(image, piece_size, indexed=False):
     rows, columns = 1, image.shape[1] // piece_size
     pieces = []
-
+    
     # Crop pieces from original image
     for y in range(rows):
         for x in range(columns):
@@ -71,6 +71,11 @@ def assemble_image(pieces, rows, columns):
         >>> original_img = assemble_image(pieces, rows, cols)
 
     """
+
+    print(columns)
+    print(rows)
+    print(len(pieces))
+
     vertical_stack = []
     for i in range(rows):
         horizontal_stack = []
